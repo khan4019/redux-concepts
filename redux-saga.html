@@ -123,6 +123,7 @@
 
 				</section>
 				<section>
+						<h2>Redux-saga</h2>
 					<ul>
 						<li>A separate thread in your application</li>
 						<li>A redux middleware</li>
@@ -136,54 +137,124 @@
 			<section>
 				<section>
 					<h2>ES6 Generator</h2>
-					<pre><code>
+					<pre class="hljs javascript"><code data-trim>
 function *foo() {
-	yield 1;
-	yield 2;
-	yield 3;
-	yield 4;
-	yield 5;
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
 }
 					</code></pre>
-					<pre class="fragment"><code>
-var abc = foo();
-abc.next(); //{value: 1, done: false}	
-abc.next(); //{value: 2, done: false}	
-abc.next(); //{value: 3, done: false}	
-abc.next(); //{value: 4, done: false}	
-abc.next(); //{value: 5, done: false}	
-abc.next(); //{value: undefined, done: true}					
+					<pre class="fragment hljs javascript"><code>
+var fooed = foo();
+fooed.next(); //{value: 1, done: false}	
+fooed.next(); //{value: 2, done: false}	
+fooed.next(); //{value: 3, done: false}	
+fooed.next(); //{value: 4, done: false}	
+fooed.next(); //{value: 5, done: false}	
+fooed.next(); //{value: undefined, done: true}
 					</code></pre>
 				</section>
 				<section>
-					<h2>Take code from</h2>
+					<h2>Saga Helpers</h2>
+					<ul>
+						<li><strong>put:</strong> dispatches an action.</li>
+						<li><strong>select:</strong> get data from the state</li>
+						<li class="fragment"><strong>fork</strong>performs a non-blocking operation </li>
+						<li class="fragment"><strong>call:</strong> runs a function. If it returns a promise, pauses the saga until the promise is resolved.</li>						
+						<li class="fragment"><strong>take:</strong> pauses until action received.</li>
+						
+						<li class="fragment"><strong>takeEvery:</strong> return results for all the calls triggered.</li>
+						<li class="fragment"><strong>takeLatest:</strong> If we trigger several cases, it’s going to ignore all of them except the last one</li>
+						
+					</ul>
+				</section>
+				<section>
+						<h2>Create Saga</h2>
+						<pre class="hljs javascript"><code data-trim>
+function* loadUser() {
+  try {
+    //1st step: call getUser,  then assign value to user
+	const user = yield call(fetch, '/getUser', { method: 'GET' });
+	
+   //2nd step: dispatch action
+   yield put({type: 'FETCH_USER_SUCCESS', payload: user});
+  } catch(error) {
+    //optional step: if something fails dispatch fail
+    yield put({type: 'FETCH_FAILED', error});
+  }
+}
+						</code></pre>
+					</section>
+				<section>
+					<h2>Register Saga Generator</h2>
+					<pre class="hljs javascript"><code data-trim>
+function* rootSaga() {
+  yield[
+   fork(loadUser),
+   takeLatest('LOAD_DASHBOARD', loadDashboardSequenced)
+  ];
+}	
+					</code></pre>
+				</section>
+				<section>
+						<h2>Inject the Saga Middleware </h2>
+						<pre class="hljs javascript"><code data-trim>
+import { applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import reducers from './reducers';
+import sagas from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+let middleware = applyMiddleware(sagaMiddleware);
+
+const store = createStore(reducers, middleware);
+sagaMiddleware.run(sagas);
+
+// inject sagas into the middleware
+sagaMiddleware.run(sagas); 
+
+						</code></pre>
+					</section>
+					
+				<section>
+					<h2>Advanced Usage</h2>
+					<ul>
+						<li>Nesting Sagas</li>
+						<li>Sequential Sagas</li>
+						<li>Multiple Sagas</li>
+						<li></li>
+						<li></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Refferrence</h2>
 					<ul>
 						<li>
-							<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">very good</a>
+							<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">Async operations using redux-saga</a>
 						</li>
 						<li>
-							<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">ok</a>
+							<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">Handling async in Redux with Sagas</a>
 						</li>
 						<li>
-							<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">something</a>
+							<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">From actions creators to sagas</a>
 						</li>
+						
 						<li>
-							<a href="https://medium.com/@totaldis/redux-saga-in-action-s-f7d11cffa35a">less imp</a>
-						</li>
-						<li>
-							<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd">and</a>
+							<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd"> Redux Saga With Example</a>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section>
 				<section>
-					<pre><code>
+					<pre class="hljs javascript"><code>
 // action
 const updateTitleAPI = fetch(...).then(res => res.json());
 const updateTitle = article => ({ type: UPDATE_TITLE, article });
 					</code></pre>
-					<pre><code>// saga
+					<pre class="fragment hljs javascript"><code>// saga
 function* updateTitle() {
   try {
     yield call(updateTitleAPI, action.article.title);
