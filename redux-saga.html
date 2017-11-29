@@ -161,8 +161,10 @@ fooed.next(); //{value: undefined, done: true}
 					<ul>
 						<li><strong>put:</strong> dispatches an action.</li>
 						<li><strong>select:</strong> get data from the state</li>
-						<li class="fragment"><strong>fork</strong>performs a non-blocking operation </li>
+						<br>
+						<li class="fragment"><strong>fork:</strong> performs a non-blocking operation </li>
 						<li class="fragment"><strong>call:</strong> runs a function. If it returns a promise, pauses the saga until the promise is resolved.</li>						
+						<br>
 						<li class="fragment"><strong>take:</strong> pauses until action received.</li>
 						
 						<li class="fragment"><strong>takeEvery:</strong> return results for all the calls triggered.</li>
@@ -176,11 +178,12 @@ fooed.next(); //{value: undefined, done: true}
 function* loadUser() {
   try {
     //1st step: call getUser,  then assign value to user
-	const user = yield call(fetch, '/getUser', { method: 'GET' });
+    const user = yield call(fetch, '/getUser', { method: 'GET' });
 	
    //2nd step: dispatch action
    yield put({type: 'FETCH_USER_SUCCESS', payload: user});
-  } catch(error) {
+  } 
+  catch(error) {
     //optional step: if something fails dispatch fail
     yield put({type: 'FETCH_FAILED', error});
   }
@@ -190,7 +193,7 @@ function* loadUser() {
 				<section>
 					<h2>Register Saga Generator</h2>
 					<pre class="hljs javascript"><code data-trim>
-function* rootSaga() {
+function* sagas() {
   yield[
    fork(loadUser),
    takeLatest('LOAD_DASHBOARD', loadDashboardSequenced)
@@ -228,24 +231,7 @@ sagaMiddleware.run(sagas);
 						<li></li>
 					</ul>
 				</section>
-				<section>
-					<h2>Refferrence</h2>
-					<ul>
-						<li>
-							<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">Async operations using redux-saga</a>
-						</li>
-						<li>
-							<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">Handling async in Redux with Sagas</a>
-						</li>
-						<li>
-							<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">From actions creators to sagas</a>
-						</li>
-						
-						<li>
-							<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd"> Redux Saga With Example</a>
-						</li>
-					</ul>
-				</section>
+				
 			</section>
 			<section>
 				<section>
@@ -308,211 +294,27 @@ export function* fetchData(action) {
 				<section>
 					<h2>Saga vs thunk</h2>
 				</section>
-				<section>
-					<img src="./images/redux/componentTree1.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/componentTree2.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/componentTree3.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/componentTree5.png" alt="">
-				</section>
+				
 			</section>
 			<section>
-				<section>
-					<h2>What if we put them in one place</h2>
-				</section>
-				<section>
-					<img src="./images/redux/centralState1.png" alt="">
-				</section>
-
-				<section>
-					<img src="./images/redux/centralState3.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/centralState4.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/centralState5.png" alt="">
-				</section>
-				<section>
-					<h2>Store</h2>
+					<h2>Refferrence</h2>
 					<ul>
-						<li>Holds application state</li>
-						<li>Only one store for all its application state</li>
-						<li>Single source of truth</li>
-					</ul>
-				</section>
-				<section>
-					<img src="./images/redux/solve2.png" alt="">
-				</section>
-
-			</section>
-			<section>
-				<section>
-					<h2>How will we change the state?</h2>
-				</section>
-				<section>
-					<img src="./images/redux/centralState6.png" alt="">
-				</section>
-				<section>
-					<h2>Action</h2>
-					<ul>
-						<li>Actions</li>
-						<li>Action container</li>
-					</ul>
-					<pre><code class="hljs JavaScript">
-{
-  type: 'ADD_TODO',
-  text: 'Take 8 bathroom breaks'
-}
-					</code></pre>
-					<li class="fragment">dispatch action</li>
-					<aside class="notes">
-						<p>Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
-						</p>
-					</aside>
-				</section>
-				<section>
-					<img src="./images/redux/centralState7.png" alt="">
-				</section>
-			</section>
-			<section>
-				<section>
-					<h2>But you didn't tell how state will change?</h2>
-				</section>
-				<section>
-					<h2 style="color:red">Actually state will not change</h2>
-					<h4 class="fragment">we will create a new state with the change</h4>
-					<pre class="hljs JavaScript fragment"><code>
-function add(x, y){
-  return x + y;
-}
-					</code></pre>
-					<pre class="hljs JavaScript fragment" data-trim><code>
-add(1, 2); // output is 3
-add(1, 2); // output still is 3
-add(1, 2); // WILL ALWAYS output 3
-					</code></pre>
-				</section>
-				<section>
-					<img src="./images/redux/stateChange8.png" alt="">
-				</section>
-				<section>
-					<img src="./images/redux/stateChange9.png" alt="">
-				</section>
-				<section>
-					<h2>reducer</h2>
-					<ul>
-						<li>Actions describe the fact that something happened</li>
-						<li>Action don't specify how the application's state should change</li>
-						<li class="fragment">How state will change will be defined by
-							<strong>reducer</strong>
+						<li>
+							<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">Async operations using redux-saga</a>
+						</li>
+						<li>
+							<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">Handling async in Redux with Sagas</a>
+						</li>
+						<li>
+							<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">From actions creators to sagas</a>
+						</li>
+						
+						<li>
+							<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd"> Redux Saga With Example</a>
 						</li>
 					</ul>
-					<pre class="hljs javascript"><code>
-case ADD_TODO:
-  return [
-    ...state,
-   {
-     text: action.text,
-     completed: false
-   }
-]
-					</code></pre>
 				</section>
-				<section>
-					<h2>reducer</h2>
-					<img src="./images/redux/reducer.png" alt="">
-				</section>
-				<section>
-					<h2>Data Flow</h2>
-					<ul>
-						<li>Action is a plain object describing what happened</li>
-						<li class="fragment">Call store.dispatch(action) from anywhere in your app</li>
-						<li class="fragment">Store calls the reducer function you gave for the given action</li>
-						<li class="fragment">In root reducer you may combine multiple reducers into a single state tree</li>
-						<li class="fragment">Store saves the complete state tree returned by the root reducer</li>
-					</ul>
-				</section>
-			</section>
-			<section>
-				<section>
-					<h2>Basic Building Block</h2>
-					<ul>
-						<li>Store</li>
-						<li>Action</li>
-						<li>Dispatch</li>
-						<li>Reducer</li>
-					</ul>
-				</section>
-			</section>
-			<section>
-				<section>
-					<h2>Implement Redux</h2>
-				</section>
-				<section>
-					<pre><code class="hljs javascript">
-npm install --save redux
-npm install --save react-redux
-					</code></pre>
-				</section>
-				<section>
-					<img src="./images/redux/containerComponent.png" alt="">
-					<p>
-						<small>ref:
-							<a href="https://giamir.com/unit-testing-a-react-redux-app">unit test ract redux app</a>
-						</small>
-					</p>
-				</section>
-				<section>
-					<img src="./images/redux/smartcompoent.png" alt="">
-				</section>
-			</section>
-			<section>
-				<h1>Lets code Redux</h1>
-				<img src="./images/redux/redux.png" alt="">
-			</section>
-			<section>
-				<h2>Reference</h2>
-				<ul>
-					<li>
-						<a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367">You Might Not Need Redux</a>
-					</li>
-					<li>
-						<a href="https://egghead.io/courses/getting-started-with-redux">Getting started with Redux</a>
-					</li>
-					<li>
-						<a href="http://redux.js.org/docs/basics/">Redux official doc</a>
-					</li>
-					<li>
-						<a href="https://learnredux.com/">learn Redux</a>
-					</li>
-					<li>
-						<a href="">Redux saga</a>
-					</li>
-				</ul>
-			</section>
-
-
-			<section>
-				<h2>Learn react by building</h2>
-				<ul>
-					<li>
-						<a href="http://thatjsdude.com/workshops/react/mn.html">ReactJS Workshop for beginners</a>
-					</li>
-					<li>Build an
-						<a href="https://ema-john.firebaseapp.com/">e-commerce site</a>
-					</li>
-					<li>Email:
-						<span style="color:lightcoral">khan4019@gmail.com</span>
-					</li>
-				</ul>
-				<img style="height:350px;" src="./images/others/workshop1.jpg" alt="">
-			</section>
+			
 			<section>
 				<h1>Thank you</h1>
 				<p>Email:
