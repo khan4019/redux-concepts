@@ -123,7 +123,7 @@
 
 				</section>
 				<section>
-						<h2>Redux-saga</h2>
+					<h2>Redux-saga</h2>
 					<ul>
 						<li>A separate thread in your application</li>
 						<li>A redux middleware</li>
@@ -159,22 +159,29 @@ fooed.next(); //{value: undefined, done: true}
 				<section>
 					<h2>Saga Helpers</h2>
 					<ul>
-						<li><strong>put:</strong> dispatches an action.</li>
-						<li><strong>select:</strong> get data from the state</li>
+						<li>
+							<strong>put:</strong> dispatches an action.</li>
+						<li>
+							<strong>select:</strong> get data from the state</li>
 						<br>
-						<li class="fragment"><strong>fork:</strong> performs a non-blocking operation </li>
-						<li class="fragment"><strong>call:</strong> runs a function. If it returns a promise, pauses the saga until the promise is resolved.</li>						
+						<li class="fragment">
+							<strong>fork:</strong> performs a non-blocking operation </li>
+						<li class="fragment">
+							<strong>call:</strong> runs a function. If it returns a promise, pauses the saga until the promise is resolved.</li>
 						<br>
-						<li class="fragment"><strong>take:</strong> pauses until action received.</li>
-						
-						<li class="fragment"><strong>takeEvery:</strong> return results for all the calls triggered.</li>
-						<li class="fragment"><strong>takeLatest:</strong> If we trigger several cases, it’s going to ignore all of them except the last one</li>
-						
+						<li class="fragment">
+							<strong>take:</strong> pauses until action received.</li>
+
+						<li class="fragment">
+							<strong>takeEvery:</strong> return results for all the calls triggered.</li>
+						<li class="fragment">
+							<strong>takeLatest:</strong> If we trigger several cases, it’s going to ignore all of them except the last one</li>
+
 					</ul>
 				</section>
 				<section>
-						<h2>Create Saga</h2>
-						<pre class="hljs javascript"><code data-trim>
+					<h2>Create Saga</h2>
+					<pre class="hljs javascript"><code data-trim>
 function* loadUser() {
   try {
     //1st step: call getUser,  then assign value to user
@@ -189,7 +196,7 @@ function* loadUser() {
   }
 }
 						</code></pre>
-					</section>
+				</section>
 				<section>
 					<h2>Register Saga Generator</h2>
 					<pre class="hljs javascript"><code data-trim>
@@ -202,8 +209,8 @@ function* sagas() {
 					</code></pre>
 				</section>
 				<section>
-						<h2>Inject the Saga Middleware </h2>
-						<pre class="hljs javascript"><code data-trim>
+					<h2>Inject the Saga Middleware </h2>
+					<pre class="hljs javascript"><code data-trim>
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducers from './reducers';
@@ -219,8 +226,8 @@ sagaMiddleware.run(sagas);
 sagaMiddleware.run(sagas); 
 
 						</code></pre>
-					</section>
-					
+				</section>
+
 				<section>
 					<h2>Advanced Usage</h2>
 					<ul>
@@ -231,7 +238,7 @@ sagaMiddleware.run(sagas);
 						<li></li>
 					</ul>
 				</section>
-				
+
 			</section>
 			<section>
 				<section>
@@ -294,27 +301,46 @@ export function* fetchData(action) {
 				<section>
 					<h2>Saga vs thunk</h2>
 				</section>
-				
+
 			</section>
 			<section>
-					<h2>Refferrence</h2>
-					<ul>
-						<li>
-							<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">Async operations using redux-saga</a>
-						</li>
-						<li>
-							<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">Handling async in Redux with Sagas</a>
-						</li>
-						<li>
-							<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">From actions creators to sagas</a>
-						</li>
-						
-						<li>
-							<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd"> Redux Saga With Example</a>
-						</li>
-					</ul>
-				</section>
-			
+				<h2>Refferrence</h2>
+				<ul>
+					<li>
+						<a href="https://medium.freecodecamp.org/async-operations-using-redux-saga-2ba02ae077b3">Async operations using redux-saga</a>
+					</li>
+					<li>
+						<a href="https://wecodetheweb.com/2016/10/01/handling-async-in-redux-with-sagas/">Handling async in Redux with Sagas</a>
+					</li>
+					<li>
+						<a href="https://riad.blog/2015/12/28/redux-nowadays-from-actions-creators-to-sagas/">From actions creators to sagas</a>
+					</li>
+
+					<li>
+						<a href="https://medium.com/@tonypai/learn-redux-saga-with-simple-example-a7175417f9fd"> Redux Saga With Example</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Things not to hear from non-developer</h2>
+				<ul>
+					<li>“This change shouldn’t take more than a few minutes.”</li>
+					<li>“Let’s have a meeting!”</li>
+					<li>Don’t worry too much about security… it’s not like we’re going to get hacked or anything.</li>
+					<li>There’s no requirements doc, but I’m sure you can figure it out.</li>
+					<li>The client needs this to work on IE 9.</li>
+					<li>We don’t want to pay for the software you need to license, so why don’t you just build it yourself?</li>
+					<li>“I know you’ve been working on it for a year, but we’re canceling this project.”</li>
+					<li>We’ve contracted you on this client project… you know ColdFusion, right?</li>
+					<li></li>
+					<li></li>
+				</ul>
+				<p>ref:
+					<a href="https://hackernoon.com/11-things-developers-love-hearing-from-non-developer-co-workers-ea94805cf05d">11-things-developers-love-hearing-from-non-developer-co-workers</a>
+				</p>
+			</section>
+
+
 			<section>
 				<h1>Thank you</h1>
 				<p>Email:
